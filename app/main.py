@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from bson import ObjectId
-from database import collection
-from models import Item, ItemUpdate
+from app.database.mongo_client import collection
+from app.models.models import Item, ItemUpdate
 
 app = FastAPI(title="FastAPI + MongoDB CRUD")
 
