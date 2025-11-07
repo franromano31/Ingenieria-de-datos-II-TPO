@@ -6,4 +6,4 @@ DB_NAME = os.getenv("DB_NAME", "fastapi_db")
 
 client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
-collection = db["items"]
+
