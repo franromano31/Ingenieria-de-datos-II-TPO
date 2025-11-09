@@ -11,11 +11,11 @@ class Paciente(BaseModel):
     nombre: str
     apellido: str
     dni: str
-    fecha_nacimiento: datetime
-    contacto: Optional[dict] = None
+    email: str
     historia_clinica: Optional[List[HistoriaClinica]] = []
-    profesional_asignado: Optional[str]
+    profesional_asignado: Optional[str] = None
     activo: bool = True
+    password: str
 
 class Profesional(BaseModel):
     nombre: str
@@ -24,6 +24,7 @@ class Profesional(BaseModel):
     email: str
     pacientes_ids: Optional[List[str]] = []
     activo: bool = True
+    password: str
 
 class Habito(BaseModel):
     paciente_id: str
