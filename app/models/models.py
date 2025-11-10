@@ -58,3 +58,9 @@ class MetricaDashboard(BaseModel):
     promedio_calorias: float
     promedio_riesgo: float
     ult_actualizacion: datetime
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+    role: str
+

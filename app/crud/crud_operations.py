@@ -23,3 +23,7 @@ def update_document(collection: str, id: str, data: dict):
 def delete_document(collection: str, id: str):
     db[collection].delete_one({"_id": ObjectId(id)})
     return {"message": f"Documento eliminado de {collection}"}
+
+def get_document_by_field(collection_name, field, value):
+    collection = db[collection_name]
+    return serialize_doc(collection.find_one({field: value}))

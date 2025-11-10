@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from app.models.models import (
-    Paciente, Profesional, Turno, Habito, Riesgo, MetricaDashboard
+    Paciente, Profesional, Turno, Habito, Riesgo, MetricaDashboard, LoginRequest
 )
 from app.crud import crud_operations as crud
 
@@ -12,6 +12,16 @@ router = APIRouter()
 @router.post("/pacientes")
 def create_paciente(paciente: Paciente):
     return crud.create_document("pacientes", paciente.dict())
+
+@router.post("/login")
+def login(login_request: LoginRequest):
+    collection = "pacientes" if login_request.role == "patient" else "profesionales"
+    user = crud.get_document_by_field(collection, "email", login_request.email)
+    if user["password"] == login_request.password: #TODO: contraseña en texto plano, en produccion cambiar por hash
+        return {"user":user}
+    else:
+        raise HTTPException(status_code=401, detail="Credenciales inválidas")
+    
 
 @router.get("/pacientes")
 def get_pacientes():
