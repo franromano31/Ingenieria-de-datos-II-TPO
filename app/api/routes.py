@@ -53,6 +53,13 @@ def create_profesional(profesional: Profesional):
 def get_profesionales():
     return crud.get_all_documents("profesionales")
 
+@router.get("/profesionales/{profesional_id}")
+def get_profesional(profesional_id: str):
+    profesional = crud.get_document_by_id("profesionales", profesional_id)
+    if not profesional:
+        raise HTTPException(status_code=404, detail="Profesional no encontrado")
+    return profesional
+
 # -------------------------------
 # TURNOS
 # -------------------------------
@@ -70,6 +77,11 @@ def get_turnos_by_paciente(paciente_id: str):
     if not turnos:
         raise HTTPException(status_code=404, detail="No se encontraron turnos para este paciente")
     return turnos
+
+@router.delete("/turnos/{turno_id}")
+def delete_turno(turno_id: str):
+    return crud.delete_document("turnos", turno_id)
+
 
 # -------------------------------
 # HABITOS
