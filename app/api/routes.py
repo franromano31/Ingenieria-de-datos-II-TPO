@@ -64,6 +64,13 @@ def create_turno(turno: Turno):
 def get_turnos():
     return crud.get_all_documents("turnos")
 
+@router.get("/turnos/paciente/{paciente_id}")
+def get_turnos_by_paciente(paciente_id: str):
+    turnos = crud.get_documents_by_field("turnos", "paciente_id", paciente_id)
+    if not turnos:
+        raise HTTPException(status_code=404, detail="No se encontraron turnos para este paciente")
+    return turnos
+
 # -------------------------------
 # HABITOS
 # -------------------------------

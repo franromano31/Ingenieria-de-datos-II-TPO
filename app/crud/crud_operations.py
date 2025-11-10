@@ -27,3 +27,8 @@ def delete_document(collection: str, id: str):
 def get_document_by_field(collection_name, field, value):
     collection = db[collection_name]
     return serialize_doc(collection.find_one({field: value}))
+
+def get_documents_by_field(collection_name, field, value):
+    collection = db[collection_name]
+    docs = collection.find({field: value})
+    return [serialize_doc(doc) for doc in docs]
