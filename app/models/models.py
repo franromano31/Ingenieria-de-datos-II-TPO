@@ -64,3 +64,6 @@ class LoginRequest(BaseModel):
     password: str
     role: str
 
+
+class EstadoUpdate(BaseModel):
+    estado: str

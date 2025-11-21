@@ -32,3 +32,19 @@ def get_documents_by_field(collection_name, field, value):
     collection = db[collection_name]
     docs = collection.find({field: value})
     return [serialize_doc(doc) for doc in docs]
+
+
+def update_document_by_field(collection_name, field, value, data):
+    collection = db[collection_name]
+
+    # Convertir _id automáticamente
+    if field == "_id":
+        try:
+            value = ObjectId(value)
+        except:
+            pass
+
+    collection.update_one({field: value}, {"$set": data})
+
+    updated = collection.find_one({field: value})
+    return serialize_doc(updated)

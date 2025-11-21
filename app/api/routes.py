@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from app.models.models import (
-    Paciente, Profesional, Turno, Habito, Riesgo, MetricaDashboard, LoginRequest
+    Paciente, Profesional, Turno, Habito, Riesgo, MetricaDashboard, LoginRequest, EstadoUpdate
 )
 from app.crud import crud_operations as crud
 
@@ -78,9 +78,20 @@ def get_turnos_by_paciente(paciente_id: str):
         raise HTTPException(status_code=404, detail="No se encontraron turnos para este paciente")
     return turnos
 
+@router.get("/turnos/profesional/{profesional_id}")
+def get_turnos_by_profesional(profesional_id: str):
+    turnos = crud.get_documents_by_field("turnos", "profesional_id", profesional_id)
+    if not turnos:
+        raise HTTPException(status_code=404, detail="No se encontraron turnos para este profesional")
+    return turnos
+
 @router.delete("/turnos/{turno_id}")
 def delete_turno(turno_id: str):
     return crud.delete_document("turnos", turno_id)
+
+@router.put("/turnos/{turno_id}")
+def update_turno(turno_id: str, data: EstadoUpdate):
+    return crud.update_document_by_field("turnos", "_id", turno_id, {"estado": data.estado})
 
 
 # -------------------------------
